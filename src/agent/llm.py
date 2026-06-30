@@ -1,6 +1,7 @@
 import os
 
 from anthropic import Anthropic
+from anthropic import AsyncAnthropic
 from anthropic.types import RawContentBlockDeltaEvent, RawMessageDeltaEvent,ThinkingDelta, TextDelta
 from anthropic.types.raw_message_delta_event import Delta
 from dataclasses import dataclass, field
@@ -24,19 +25,20 @@ cache_control	Ignored
 @dataclass
 class ClientConfig:
     model: str = field(default_factory=lambda: os.environ.get("ANTHROPIC_MODEL", "claude-opus-4-8"))
-    api_key: str = field(default_factory=lambda: os.environ.get("ANTHROPIC_API_KEY", ""))
-    base_url: str = field(default_factory=lambda: os.environ.get("ANTHROPIC_BASE_URL", ""))
+    api_key: str = field(default_factory=lambda: os.environ.get("ANTHROPIC_API_KEY", None))
+    base_url: str = field(default_factory=lambda: os.environ.get("ANTHROPIC_BASE_URL", None))
     system_prompt:str = "You are a helpful assistant"
     max_token: int = 16384
     max_retrise: int = 3
     timeout: float = 120.00
     stream: bool = True
     """anthropic: thinking={"type": "enabled", "budget_tokens": 10000},"""
-    thinking: dict = {"type": "enabled"}
-    """openai: reasoning_effort="high",  extra_body={"thinking": {"type": "enabled"}}"""
-    extra_body: dict = {"thinking": {"type": "enabled"}}
+    thinking: dict = {"type": "adaptive"}
+    # """openai: reasoning_effort="high",  extra_body={"thinking": {"type": "enabled"}}"""
+    # extra_body: dict = {"thinking": {"type": "enabled"}}
     """{"type": "any"}	强制至少一个; {"type": "none"} 禁用工具;{"type": "tool", "name": "get_weather"} 强制指定工具"""
     tool_choice:dict = {"type": "auto"}
+    default_headers: dict = field(default_factory=dict)
     
     # """anthropic: Enable strict mode;limit:20;Optional parameters < 24"""
     # strict:bool = True 
@@ -173,6 +175,39 @@ stream和非stream模式 使用同样的client.messages.stream
  if not stream: message = stream.get_final_message()
  else: for text in stream.text_stream:print(text, end="", flush=True)
 """
+
+
+class LLMClient:
+    def __init__(self, config: ClientConfig):
+        self.cfg = config
+        self.usage = Usage()
+        kwargs: dict = {
+            "api_key": config.api_key,
+            "max_retries": config.max_retrise,
+            "timeout": config.timeout,
+            "default_headers": config.default_headers,
+        }
+        
+        self._client = AsyncAnthropic(**kwargs)
+        
+    def _extra_params(self) -> dict:
+        params: dict = {}
+        if self.cfg.thinking:
+            params["thinking"] = {"type": "adaptive"}
+        return params
+    
+    async def _stream(
+        self,
+        kwargs,
+    ):
+        async with self._client.messages.stream(**kwargs) as stream:
+            async for event in stream:
+                print(event)
+                
+            msg = await stream.get_final_message()
+        
+        self.usage.update(msg.usage)
+        return msg
 
 
 
