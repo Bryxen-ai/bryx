@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🧱 BRYX
+# 🧱 BRYX CLI
 
 **An agent loop, hand-written. One line at a time. No magic.**
 
@@ -18,7 +18,7 @@ A few hundred lines of Python — tool dispatcher, message protocol, streaming c
 
 ## 💡 What is this
 
-Bryx is an agent loop, hand-written in a few hundred lines of Python. No LangChain, no LlamaIndex, no AutoGen. The tool dispatcher, the message protocol, the streaming client — every piece is out in the open.
+Bryx CLI is an agent loop, hand-written in a few hundred lines of Python. No LangChain, no LlamaIndex, no AutoGen. The tool dispatcher, the message protocol, the streaming client — every piece is out in the open.
 
 After a while building with agent frameworks, I realized I couldn't explain how one actually worked under the hood. So I tore it down to the bones and rebuilt it. Turns out an agent really is just an LLM, a tool loop, and some state — small enough to read in one sitting. That's the point.
 
@@ -26,7 +26,7 @@ After a while building with agent frameworks, I realized I couldn't explain how 
 
 ## 🤔 Why not just use `<FRAMEWORK>`
 
-If you want to ship a product fast, use a framework. Bryx is for when you want to *understand* what's happening — to debug a tool dispatch without digging through six layers of abstraction, or to tweak the main loop without reading 20k lines of someone else's code first.
+If you want to ship a product fast, use a framework. Bryx CLI is for when you want to *understand* what's happening — to debug a tool dispatch without digging through six layers of abstraction, or to tweak the main loop without reading 20k lines of someone else's code first.
 
 It's also a decent scaffold if you have opinions about how an agent should behave and don't want to fight a framework to express them.
 

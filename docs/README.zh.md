@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🧱 BRYX
+# 🧱 BRYX CLI
 
 **一行一行写出来的 Agent。没有魔法，全是明牌。**
 
@@ -18,7 +18,7 @@
 
 ## 💡 这是什么
 
-Bryx 是一个从头手写的 Agent 框架，几百行 Python。不用 LangChain，不用 LlamaIndex，不用 AutoGen。工具调度、消息协议、流式客户端 —— 全部摊开在代码里，没有黑盒。
+Bryx CLI 是一个从头手写的 Agent 框架，几百行 Python。不用 LangChain，不用 LlamaIndex，不用 AutoGen。工具调度、消息协议、流式客户端 —— 全部摊开在代码里，没有黑盒。
 
 做这个项目的原因很简单：Agent 框架用多了，发现自己其实说不清一个 Agent 到底是怎么转起来的。那就拆到骨头，重新搭一遍。
 
@@ -28,9 +28,9 @@ Bryx 是一个从头手写的 Agent 框架，几百行 Python。不用 LangChain
 
 ## 🤔 为什么不用现成的框架
 
-要快速交付产品，用框架。Bryx 适合的场景是：你想*搞懂*一个 Agent 怎么运作 —— 工具调用为什么挂了，不想翻六层抽象去查；想改主循环的行为，不想先啃两万行别人的代码。
+要快速交付产品，用框架。Bryx CLI 适合的场景是：你想*搞懂*一个 Agent 怎么运作 —— 工具调用为什么挂了，不想翻六层抽象去查；想改主循环的行为，不想先啃两万行别人的代码。
 
-如果你对 Agent 的行为有自己的想法，又不想跟框架打架，Bryx 也可以当一个起步的脚手架。
+如果你对 Agent 的行为有自己的想法，又不想跟框架打架，Bryx CLI 也可以当一个起步的脚手架。
 
 ---
 
@@ -64,8 +64,8 @@ Bryx 是一个从头手写的 Agent 框架，几百行 Python。不用 LangChain
 Python 3.14+，我用 [uv](https://github.com/astral-sh/uv) 管理依赖。
 
 ```bash
-git clone https://github.com/loonghao/bryx.git
-cd bryx
+git clone https://github.com/loonghao/bryx-cli.git
+cd bryx-cli
 uv sync
 
 # 把 API key 写进 .env
